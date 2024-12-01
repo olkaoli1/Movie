@@ -1,66 +1,60 @@
-package com.example;
-
 import org.junit.jupiter.api.Test;
-
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieManagerTest {
 
     @Test
-    public void shouldAddMovies() {
+    public void shouldReturnAllMovies() {
         MovieManager manager = new MovieManager();
+        manager.add(new Movie("Movie1"));
+        manager.add(new Movie("Movie2"));
 
-        Movie movie1 = new Movie("Бладшот");
-        Movie movie2 = new Movie("Вперёд");
-
-        manager.add(movie1);
-        manager.add(movie2);
-
-        Movie[] expected = {movie1, movie2};
+        Movie[] expected = {new Movie("Movie1"), new Movie("Movie2")};
         Movie[] actual = manager.findAll();
 
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
+                Arrays.stream(actual).map(Movie::getName).toArray());
     }
 
     @Test
-    public void shouldFindLastMoviesWithDefaultLimit() {
-        MovieManager manager = new MovieManager();
+    public void shouldReturnLastMoviesWhenLessThanLimit() {
+        MovieManager manager = new MovieManager(5);
+        manager.add(new Movie("Movie1"));
+        manager.add(new Movie("Movie2"));
 
-        manager.add(new Movie("Бладшот"));
-        manager.add(new Movie("Вперёд"));
-        manager.add(new Movie("Отель Белград"));
-        manager.add(new Movie("Джентльмены"));
-        manager.add(new Movie("Человек-невидимка"));
-        manager.add(new Movie("Тролли"));
-
-        Movie[] expected = {
-                new Movie("Тролли"),
-                new Movie("Человек-невидимка"),
-                new Movie("Джентльмены"),
-                new Movie("Отель Белград"),
-                new Movie("Вперёд")
-        };
+        Movie[] expected = {new Movie("Movie2"), new Movie("Movie1")};
         Movie[] actual = manager.findLast();
 
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
+                Arrays.stream(actual).map(Movie::getName).toArray());
     }
 
     @Test
-    public void shouldFindLastMoviesWithCustomLimit() {
+    public void shouldReturnLastMoviesWhenMoreThanLimit() {
         MovieManager manager = new MovieManager(3);
+        manager.add(new Movie("Movie1"));
+        manager.add(new Movie("Movie2"));
+        manager.add(new Movie("Movie3"));
+        manager.add(new Movie("Movie4"));
 
-        manager.add(new Movie("Бладшот"));
-        manager.add(new Movie("Вперёд"));
-        manager.add(new Movie("Отель Белград"));
-        manager.add(new Movie("Джентльмены"));
-
-        Movie[] expected = {
-                new Movie("Джентльмены"),
-                new Movie("Отель Белград"),
-                new Movie("Вперёд")
-        };
+        Movie[] expected = {new Movie("Movie4"), new Movie("Movie3"), new Movie("Movie2")};
         Movie[] actual = manager.findLast();
 
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
+                Arrays.stream(actual).map(Movie::getName).toArray());
+    }
+
+    @Test
+    public void shouldReturnLastMoviesWhenEqualToLimit() {
+        MovieManager manager = new MovieManager(2);
+        manager.add(new Movie("Movie1"));
+        manager.add(new Movie("Movie2"));
+
+        Movie[] expected = {new Movie("Movie2"), new Movie("Movie1")};
+        Movie[] actual = manager.findLast();
+
+        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
+                Arrays.stream(actual).map(Movie::getName).toArray());
     }
 }

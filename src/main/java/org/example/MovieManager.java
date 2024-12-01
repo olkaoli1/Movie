@@ -1,15 +1,10 @@
-package com.example;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 public class MovieManager {
     private Movie[] movies = new Movie[0];
-    private int limit;
+    private int limit = 5;
 
     public MovieManager() {
-        this.limit = 5; // Лимит по умолчанию
     }
 
     public MovieManager(int limit) {
