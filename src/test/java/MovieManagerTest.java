@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class MovieManagerTest {
 
@@ -13,8 +12,7 @@ public class MovieManagerTest {
         Movie[] expected = {new Movie("Movie1"), new Movie("Movie2")};
         Movie[] actual = manager.findAll();
 
-        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
-                Arrays.stream(actual).map(Movie::getName).toArray());
+        assertArrayEquals(expected, actual, "Expected movies do not match actual movies");
     }
 
     @Test
@@ -26,8 +24,7 @@ public class MovieManagerTest {
         Movie[] expected = {new Movie("Movie2"), new Movie("Movie1")};
         Movie[] actual = manager.findLast();
 
-        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
-                Arrays.stream(actual).map(Movie::getName).toArray());
+        assertArrayEquals(expected, actual, "Expected last movies do not match actual movies");
     }
 
     @Test
@@ -41,8 +38,7 @@ public class MovieManagerTest {
         Movie[] expected = {new Movie("Movie4"), new Movie("Movie3"), new Movie("Movie2")};
         Movie[] actual = manager.findLast();
 
-        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
-                Arrays.stream(actual).map(Movie::getName).toArray());
+        assertArrayEquals(expected, actual, "Expected last movies do not match actual movies");
     }
 
     @Test
@@ -54,7 +50,6 @@ public class MovieManagerTest {
         Movie[] expected = {new Movie("Movie2"), new Movie("Movie1")};
         Movie[] actual = manager.findLast();
 
-        assertArrayEquals(Arrays.stream(expected).map(Movie::getName).toArray(),
-                Arrays.stream(actual).map(Movie::getName).toArray());
+        assertArrayEquals(expected, actual, "Expected last movies do not match actual movies");
     }
 }
